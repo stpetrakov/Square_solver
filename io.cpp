@@ -15,7 +15,7 @@ void Clear_buffer()
 
 void input (Coeffs* coeffs)
 {
-    int readn = 0;
+    int readn = 0; //количество введенных чисел
 
     printf ("Enter a, b, c:\n");
     while (scanf ("%lg %lg %lg", &coeffs->a, &coeffs->b, &coeffs->c) != 3)
@@ -68,5 +68,5 @@ void output (enum RootsNumber nRoots, Complex x1, Complex x2)
         default:
             printf ("ERROR: got nRoots = %d\n", nRoots);
     }
-    printf("%c\n", char(2));
+    printf("%c\n", char(2)); //смайлик :)
 }
