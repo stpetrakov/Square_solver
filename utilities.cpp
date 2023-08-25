@@ -5,7 +5,7 @@
 
 void Swap(double *a, double *b)
 {
-    const double save = *b;
+    const double save = *b; //временно хранит значение b
     b = a;
     *a = save;
 
@@ -20,8 +20,8 @@ void Max_struct (Complex* x1, Complex* x2)
         Swap (&x1->imagine, &x2->imagine);
 }
 
-int Compare_double (double first, double second)
+bool Compare_double (double first, double second)
 {
-    const double EPSILON = 1e-5;
+    const double EPSILON = 1e-5;  //допустимая погрешность
     return (fabs (first - second) < EPSILON);
 }

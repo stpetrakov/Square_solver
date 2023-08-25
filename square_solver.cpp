@@ -76,7 +76,7 @@ enum RootsNumber Solver (Coeffs coeffs, Complex* x1, Complex* x2)
     {
         if (coeffs.a*coeffs.c > 0)
         {
-            const double D = -4*coeffs.a*coeffs.c;
+            const double D = -4*coeffs.a*coeffs.c; //дискриминант
             return (Solve_complex_equation (coeffs, D, x1, x2));
         }
         else
@@ -109,7 +109,7 @@ enum RootsNumber Solver (Coeffs coeffs, Complex* x1, Complex* x2)
         }
         else if (D > 0)
         {
-            double sqrt_D = sqrt(D);
+            double sqrt_D = sqrt(D); //корень дискриминанты
             x1->real = (-coeffs.b + sqrt_D) / (2*coeffs.a);
             x2->real = (-coeffs.b - sqrt_D) / (2*coeffs.a);
             return TWO_ROOTS;

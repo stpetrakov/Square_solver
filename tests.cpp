@@ -53,8 +53,8 @@ void TestAll()
                                 { 0, 0, 0,   0,        0,         0,         0,       -1},
     };
 
-    int count_of_tests = sizeof(test_inputs) / sizeof(TestInput); ///< количество тестов
-    int testOK = 0; ///< счётик пройденных тестов
+    int count_of_tests = sizeof(test_inputs) / sizeof(TestInput); // количество тестов
+    int testOK = 0; // счётик пройденных тестов
     for (int i = 0; i < count_of_tests; i++)
     {
         TestInput test = test_inputs[i]; //or TestInput *test = test_inputs + i
