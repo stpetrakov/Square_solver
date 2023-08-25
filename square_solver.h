@@ -18,8 +18,8 @@ enum RootsNumber
 struct Coeffs
 {
     double a; ///< коэффициент a
-    double b;
-    double c;
+    double b; ///< коэффициент b
+    double c; ///< коэффициент c
 };
 
 /**
