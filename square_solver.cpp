@@ -33,7 +33,7 @@ enum RootsNumber Solve_complex_equation (Coeffs coeffs, const double D, Complex*
     return TWO_ROOTS;
 }
 
-enum RootsNumber Solve_Linear_equation (struct Coeffs coeffs, Complex* x1)
+enum RootsNumber Solve_Linear_equation (Coeffs coeffs, Complex* x1)
 {
     assert (isfinite (x1->real));
     if (Compare_double (coeffs.c, 0))
@@ -64,7 +64,7 @@ enum RootsNumber Solve_Linear_equation (struct Coeffs coeffs, Complex* x1)
     }
 }
 
-enum RootsNumber Solver (struct Coeffs coeffs, Complex* x1, Complex* x2)
+enum RootsNumber Solver (Coeffs coeffs, Complex* x1, Complex* x2)
 {
 
     if (Compare_double (coeffs.a, 0))

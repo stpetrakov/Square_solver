@@ -6,10 +6,10 @@
 */
 enum RootsNumber
 {
-    INF_ROOTS = -1,
-    ZERO_ROOTS = 0,
-    ONE_ROOT = 1,
-    TWO_ROOTS = 2,
+    INF_ROOTS = -1, ///< бесконечность корней
+    ZERO_ROOTS = 0, ///< бесконечность корней
+    ONE_ROOT = 1,   ///< бесконечность корней
+    TWO_ROOTS = 2,  ///< бесконечность корней
 };
 
 /**
@@ -27,8 +27,8 @@ struct Coeffs
 */
 struct Complex
 {
-    double real;
-    double imagine;
+    double real;    ///< реальная часть икса
+    double imagine; ///< мнимая часть икса
 };
 
 

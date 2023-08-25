@@ -6,13 +6,13 @@
 #include "utilities.h"
 #include "tests.h"
 
-int Compare_complex_struct (Complex x1, Complex x1ref)
+bool Compare_complex_struct (Complex x1, Complex x1ref)
 {
     return (Compare_double (x1.real, x1ref.real) &&
             Compare_double (x1.imagine, x1ref.imagine));
 }
 
-int TestOne (const Coeffs coeffs, Complex x1ref, Complex x2ref, const int nRootsref, const int test_number)
+int TestOne (const Coeffs coeffs, const Complex x1ref, const Complex x2ref, const int nRootsref, const int test_number)
 {
     struct Complex x1 = {0, 0};
     struct Complex x2 = {0, 0};
@@ -53,8 +53,8 @@ void TestAll()
                                 { 0, 0, 0,   0,        0,         0,         0,       -1},
     };
 
-    int count_of_tests = sizeof(test_inputs) / sizeof(TestInput);
-    int testOK = 0;
+    int count_of_tests = sizeof(test_inputs) / sizeof(TestInput); ///< количество тестов
+    int testOK = 0; ///< счётик пройденных тестов
     for (int i = 0; i < count_of_tests; i++)
     {
         TestInput test = test_inputs[i]; //or TestInput *test = test_inputs + i
