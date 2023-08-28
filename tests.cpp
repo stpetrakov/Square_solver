@@ -39,6 +39,7 @@ int TestOne (const Coeffs coeffs, const Complex x1ref, const Complex x2ref, cons
 
 void TestAll()
 {
+/*
     //                            a  b  c  x1.re     x1.im       x2.re     x2.im     nRref
     TestInput test_inputs[] = { { 1, 2, 1,  -1,        0,         0,         0,        1},
                                 { 1, 2, 2,  -1,        1,        -1,        -1,        2},
@@ -52,7 +53,21 @@ void TestAll()
                                 {-1, 0, 1,   1,        0,        -1,         0,        2},
                                 { 0, 0, 0,   0,        0,         0,         0,       -1},
     };
+*/
+    FILE *tests = fopen ("tests.txt", "r");
+    TestInput test_inputs = {};
+    for (int i = 0; i < 11; ++i)
+    {
+        struct Coeffs coeffs = {0, 0, 0};
+        struct Complex x1ref = {0, 0};
+        struct Complex x2ref = {0, 0};
+        int nRootsref = 0;
+        fscanf (tests, "%lg %lg %lg %lg %lg %lg %lg %d", &coeffs.a, &coeffs.b, &coeffs.c,
+        &x1ref.real, &x1ref.imagine, &x2ref.real, &x2ref.imagine, &nRootsref);
+        TestOne (coeffs, x1ref, x2ref, nRootsref, i+1);
+    }
 
+/*
     int count_of_tests = sizeof(test_inputs) / sizeof(TestInput); // количество тестов
     int testOK = 0; // счётик пройденных тестов
     for (int i = 0; i < count_of_tests; i++)
@@ -64,4 +79,5 @@ void TestAll()
     // char(1) - smile!
     printf("Passed %d test(s) out of %d %c%c%c",
             testOK, count_of_tests, char(1), char(1), char(1));
+*/
 }

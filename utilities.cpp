@@ -6,7 +6,7 @@
 void Swap(double *a, double *b)
 {
     const double save = *b; //временно хранит значение b
-    b = a;
+    *b = *a;
     *a = save;
 
 }

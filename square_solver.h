@@ -8,7 +8,7 @@ enum RootsNumber
 {
     INF_ROOTS = -1, ///< бесконечность корней
     ZERO_ROOTS = 0, ///< ноль корней
-    ONE_ROOT = 1,   ///< один корень корней
+    ONE_ROOT = 1,   ///< один корень
     TWO_ROOTS = 2,  ///< два корня
 };
 
