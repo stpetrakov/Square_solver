@@ -32,7 +32,7 @@ bool Compare_complex_struct (Complex x1, Complex x1ref);
 @param test_number
 @return 1, если тест пройден и 0, если нет
 */
-int TestOne (const Coeffs coeffs, const Complex x1ref, const Complex x2ref, const int nRootsref, const int test_number);
+int TestOne (const TestInput test_inputs, const int test_number);
 
 /**
 @brief Подставляет тесты в TestOne и считает, сколько тестов пройдено
