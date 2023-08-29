@@ -18,23 +18,20 @@
 */
 //-----------------------------------------------
 
-/**
-@brief Основная функция, в которой начинается и заканчивается программа.
-@param argc
-@param argv[]
-@return Результат работы программы и, если этого попросит пользователь, тесты.
-*/
 int main(int argc, char* argv[])
 {
     struct Coeffs coeffs = {0, 0, 0};
     struct Complex x1    = {0, 0};
     struct Complex x2    = {0, 0};
 
-    input(&coeffs);
-    enum RootsNumber nRoots = Solver (coeffs, &x1, &x2);
-    output (nRoots, x1, x2);
-
     if (argc > 1 && strcmp(argv[1], "--test") == 0)
-        TestAll();
+        test_all();
+    else
+    {
+        input_coeffs (&coeffs);
+        enum RootsNumber n_roots = solve_square_equation (coeffs, &x1, &x2);
+        output_roots (n_roots, x1, x2);
+    }
     return 0;
 }
+

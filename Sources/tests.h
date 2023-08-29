@@ -11,33 +11,33 @@ struct TestInput
     Coeffs coeffs; ///< коэффициенты уравнения
     Complex x1ref; ///< первое решение
     Complex x2ref; ///< второе решение
-    int nRootsref; ///< количество решений
+    int n_rootsref; ///< количество решений
     //const char name[10];
 };
 
 /**
-@brief Сравнивает структуры типа Complex
-@param x1
-@param x1ref
-@return true, если структуры равны и false, если нет
+@brief Сравнивает корни
+@param x1 первый корень
+@param x1ref второй корень
+@return true, если корни равны и false, если нет
 */
-bool Compare_complex_struct (Complex x1, Complex x1ref);
+bool compare_complex (const Complex x1, const Complex x1ref);
 
 /**
 @brief Проверяет, проходит ли программа тест
-@param coeffs
-@param x1ref
-@param x2ref
-@param nRootsref
-@param test_number
+@param coeffs коэффициенты уравнения
+@param x1ref первое решение
+@param x2ref второе решение
+@param n_rootsref число решений
+@param test_number номер теста
 @return 1, если тест пройден и 0, если нет
 */
-int TestOne (const TestInput test_inputs, const int test_number);
+int test_one (const TestInput test_inputs, const int test_number);
 
 /**
-@brief Подставляет тесты в TestOne и считает, сколько тестов пройдено
+@brief Подставляет тесты в Test_one и считает, сколько тестов пройдено
 */
-void TestAll ();
+void test_all ();
 
 
 #endif

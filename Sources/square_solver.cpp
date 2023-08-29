@@ -8,23 +8,43 @@
 #include "square_solver.h"
 #include "io.h"
 
-enum RootsNumber Solve_complex_equation (Coeffs coeffs, const double D, Complex* x1, Complex* x2)
+/* snake_style
+
+PascalStyle
+
+camelStyle
+
+UPPERCASE_STYLE   */
+
+
+/**
+@brief Функция, решающая уравнение для комплексных чисел. Вызывается только если
+дискриминант отрицательный (то есть мнимая часть точно не равна нулю).
+@param coeffs
+@param x1  решение уравнения
+@param x2  решение уравнения
+@param D дискриминант квадратного уравнения
+@return Количество корней уравнения.
+*/
+static enum RootsNumber solve_complex_equation (Coeffs* coeffs, const double D, Complex* x1, Complex* x2);
+
+static enum RootsNumber solve_complex_equation (Coeffs* coeffs, const double D, Complex* x1, Complex* x2)
 {
 
     const double sqrt_D = sqrt(-D);
 
-    if (Compare_double (coeffs.b, 0))
+    if (compare_double (coeffs->b, 0))
     {
         x1->real = 0;
         x2->real = 0;
 
-        x1->imagine = +sqrt_D / (2 * fabs (coeffs.a));
+        x1->imagine = +sqrt_D / (2 * fabs (coeffs->a));
         x2->imagine = -x1->imagine;
     }
     else
     {
-        x1->real    = -coeffs.b / (2*coeffs.a);
-        x1->imagine = +sqrt_D / (2 * fabs (coeffs.a));
+        x1->real    = -coeffs->b / (2*coeffs->a);
+        x1->imagine = +sqrt_D / (2 * fabs (coeffs->a));
 
         x2->real    =  x1->real;
         x2->imagine = -x1->imagine;
@@ -33,56 +53,67 @@ enum RootsNumber Solve_complex_equation (Coeffs coeffs, const double D, Complex*
     return TWO_ROOTS;
 }
 
-enum RootsNumber Solve_Linear_equation (Coeffs coeffs, Complex* x1)
+/**
+@brief Функция, решающая линейное уравнение. Вызывается только если
+старший коэффициент равен нулю.
+@param coeffs
+@param x1  решение уравнения
+@return Количество корней уравнения.
+*/
+static enum RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1);
+
+static enum RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1)
 {
     assert (isfinite (x1->real));
-    if (Compare_double (coeffs.c, 0))
+
+    if (compare_double (coeffs->b, 0))
     {
-        if (Compare_double (coeffs.b, 0))
+        if (compare_double (coeffs->c, 0))
         {
-            return (INF_ROOTS);
+            return INF_ROOTS;
         }
 
         else
         {
-            x1->real = 0;
-            return ONE_ROOT;
+            return ZERO_ROOTS;
         }
     }
 
     else
     {
-        if (Compare_double (coeffs.b, 0))
+        if (compare_double (coeffs->c, 0))
         {
-            return ZERO_ROOTS;
+            x1->real = 0;
         }
         else
         {
-            x1->real = -coeffs.c/coeffs.b;
+            x1->real = -coeffs->c/coeffs->b;
         }
         return ONE_ROOT;
     }
 }
 
-enum RootsNumber Solver (Coeffs coeffs, Complex* x1, Complex* x2)
+enum RootsNumber solve_square_equation (Coeffs coeffs, Complex* x1, Complex* x2)
 {
-
-    if (Compare_double (coeffs.a, 0))
+    double a = coeffs.a;
+    double b = coeffs.b;
+    double c = coeffs.c;
+    if (compare_double (a, 0))
     {
-        return Solve_Linear_equation (coeffs, x1);
+        return solve_linear_equation (&coeffs, x1);
     }
 
-    else if (Compare_double (coeffs.b, 0))
+    else if (compare_double (b, 0))
     {
-        if (coeffs.a*coeffs.c > 0)
+        if (a*c > 0)
         {
-            const double D = -4*coeffs.a*coeffs.c; //дискриминант
-            return (Solve_complex_equation (coeffs, D, x1, x2));
+            const double D = -4*a*c; //дискриминант
+            return (solve_complex_equation (&coeffs, D, x1, x2));
         }
         else
         {
-            x1->real = sqrt (fabs (-coeffs.c/coeffs.a));
-            if (not Compare_double (x1->real, 0))
+            x1->real = sqrt (fabs (-c/a));
+            if (!compare_double (x1->real, 0))
             {
                 x2->real = -(x1->real);
                 return TWO_ROOTS;
@@ -91,10 +122,10 @@ enum RootsNumber Solver (Coeffs coeffs, Complex* x1, Complex* x2)
         }
     }
 
-    else if (Compare_double (coeffs.c, 0))
+    else if (compare_double (c, 0))
     {
         x2->real = 0;
-        x1->real = -coeffs.b/coeffs.a;
+        x1->real = -b/a;
         return TWO_ROOTS;
     }
 
@@ -102,7 +133,7 @@ enum RootsNumber Solver (Coeffs coeffs, Complex* x1, Complex* x2)
     {
         const double D = coeffs.b*coeffs.b - 4*coeffs.a*coeffs.c;
 
-        if (Compare_double (D, 0))
+        if (compare_double (D, 0))
         {
             x1->real = -coeffs.b / (2*coeffs.a);
             return ONE_ROOT;
@@ -116,7 +147,7 @@ enum RootsNumber Solver (Coeffs coeffs, Complex* x1, Complex* x2)
         }
         else
         {
-            return (Solve_complex_equation (coeffs, D, x1, x2));
+            return (solve_complex_equation (&coeffs, D, x1, x2));
         }
     }
 }

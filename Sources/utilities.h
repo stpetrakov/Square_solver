@@ -4,25 +4,31 @@
 #include "square_solver.h"
 
 /**
-@brief Меняет значения двух чисел
-@param b
-@param a
+@brief  Очистка буфера. Вызывается тогда и только тогда,
+когда пользователь ошибается при вводе чисел.
 */
-void Swap (double *a, double *b);
+void clear_buffer();
+
+/**
+@brief Меняет значения двух чисел
+@param b первое число
+@param a второе число
+*/
+void swap (double *a, double *b);
 
 /**
 @brief Делает x1 больше чем x2
 @param x1
 @param x2
 */
-void Max_struct (Complex* x1, Complex* x2);
+void sort_struct (Complex* x1, Complex* x2);
 
 /**
 @brief Сравнивает два числа
-@param first
-@param second
+@param first первое число
+@param second второе число
 @return true, если они равны и false, если нет
 */
-bool Compare_double (double first, double second);
+bool compare_double (double first, double second);
 
-#endif
+#endif // UTILITYES_H

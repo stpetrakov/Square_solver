@@ -7,23 +7,23 @@
 #include "tests.h"
 
 
-bool Compare_complex_struct (Complex x1, Complex x1ref)
+bool compare_complex (const Complex x1, const Complex x1ref)
 {
-    return (Compare_double (x1.real, x1ref.real) &&
-            Compare_double (x1.imagine, x1ref.imagine));
+    return (compare_double (x1.real, x1ref.real) &&
+            compare_double (x1.imagine, x1ref.imagine));
 }
 
-int TestOne (const TestInput test_inputs, const int test_number)
+int test_one (const TestInput test_inputs, const int test_number)
 {
     struct Complex x1 = {0, 0};
     struct Complex x2 = {0, 0};
 
-    int nRoots = Solver (test_inputs.coeffs, &x1, &x2);
+    int n_roots = solve_square_equation (test_inputs.coeffs, &x1, &x2);
 
     printf("%d) ", test_number);
-    if (Compare_complex_struct (x1, test_inputs.x1ref) &&
-        Compare_complex_struct (x2, test_inputs.x2ref) &&
-        test_inputs.nRootsref == nRoots)
+    if (compare_complex (x1, test_inputs.x1ref) &&
+        compare_complex (x2, test_inputs.x2ref) &&
+        test_inputs.n_rootsref == n_roots)
     {
         printf("Test OK\n");
         return 1;
@@ -32,14 +32,14 @@ int TestOne (const TestInput test_inputs, const int test_number)
     {
         printf("FAILED: ""x1" " = {%lg %lg}, x2" " = {%lg %lg}, nRoots" " = %d, "
                "expected: x1ref = {%lg %lg}, x2ref = {%lg %lg}, nRootsref = %d\n",
-               x1.real, x1.imagine, x2.real, x2.imagine, nRoots,
+               x1.real, x1.imagine, x2.real, x2.imagine, n_roots,
                test_inputs.x1ref.real, test_inputs.x1ref.imagine, test_inputs.x2ref.real,
-               test_inputs.x2ref.imagine, test_inputs.nRootsref);
+               test_inputs.x2ref.imagine, test_inputs.n_rootsref);
         return 0;
     }
 }
 
-void TestAll()
+void test_all()
 {
 /*
     //                            a  b  c  x1.re     x1.im       x2.re     x2.im     nRref
@@ -58,20 +58,21 @@ void TestAll()
 */
     FILE *tests = fopen ("tests.txt", "r");
     int count_of_tests = 0;//количество тестов
-    int testOK = 0;
+    int test_ok = 0;
     fscanf (tests, "%d", &count_of_tests);
     TestInput test_inputs = {};
     for (size_t i = 0; i < count_of_tests; ++i)
     {
 
-        fscanf (tests, "%lg %lg %lg %lg %lg %lg %lg %d", &test_inputs.coeffs.a, &test_inputs.coeffs.b,
-        &test_inputs.coeffs.c, &test_inputs.x1ref.real, &test_inputs.x1ref.imagine,
-        &test_inputs.x2ref.real, &test_inputs.x2ref.imagine, &test_inputs.nRootsref);
-        testOK += TestOne(test_inputs, i+1);
+        fscanf (tests, "%lg %lg %lg %lg %lg %lg %lg %d",
+            &test_inputs.coeffs.a, &test_inputs.coeffs.b, &test_inputs.coeffs.c,
+            &test_inputs.x1ref.real, &test_inputs.x1ref.imagine,
+            &test_inputs.x2ref.real, &test_inputs.x2ref.imagine, &test_inputs.n_rootsref);
+        test_ok += test_one(test_inputs, i+1);
     }
     // char(1) - smile!
     printf("Passed %d test(s) out of %d %c%c%c",
-            testOK, count_of_tests, char(1), char(1), char(1));
+            test_ok, count_of_tests, char(1), char(1), char(1));
 
 /*
     int count_of_tests = sizeof(test_inputs) / sizeof(TestInput); // количество тестов
