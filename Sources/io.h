@@ -5,13 +5,6 @@
 #include "utilities.h"
 
 
-
-/**
-@brief  Очистка буфера. Вызывается тогда и только тогда,
-когда пользователь ошибается при вводе чисел.
-*/
-void clear_buffer();
-
 /**
 @brief Ввод коэффициентов уравнения.
 @param coeffs коэффициенты уравнения
@@ -23,7 +16,7 @@ void input_coeffs (Coeffs* coeffs);
 @param x1 первый корень
 @param x2 второй корень
 */
-void output_complex_roots (Complex x1, Complex x2);
+void output_complex_roots (Complex* x1, Complex* x2);
 
 /**
 @brief Вывод результата работы программы или вызов complex_output, если число корней
@@ -33,6 +26,6 @@ void output_complex_roots (Complex x1, Complex x2);
 @param x1 первый корень
 @param x2 второй корень
 */
-void output_roots (enum RootsNumber nRoots, Complex x1, Complex x2);
+void output_roots (RootsNumber nRoots, Complex* x1, Complex* x2);
 
 #endif

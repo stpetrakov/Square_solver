@@ -8,14 +8,6 @@
 #include "square_solver.h"
 #include "io.h"
 
-/* snake_style
-
-PascalStyle
-
-camelStyle
-
-UPPERCASE_STYLE   */
-
 
 /**
 @brief Функция, решающая уравнение для комплексных чисел. Вызывается только если
@@ -26,12 +18,17 @@ UPPERCASE_STYLE   */
 @param D дискриминант квадратного уравнения
 @return Количество корней уравнения.
 */
-static enum RootsNumber solve_complex_equation (Coeffs* coeffs, const double D, Complex* x1, Complex* x2);
+static RootsNumber solve_complex_equation (Coeffs* coeffs, Complex* x1, Complex* x2);
 
-static enum RootsNumber solve_complex_equation (Coeffs* coeffs, const double D, Complex* x1, Complex* x2)
+static RootsNumber solve_complex_equation (Coeffs* coeffs, Complex* x1, Complex* x2)
 {
+    assert (coeffs);
+    assert (x1);
+    assert (x2);
 
+    const double D = (coeffs->b * coeffs->b) - 4*coeffs->a*coeffs->c; //дискриминант
     const double sqrt_D = sqrt(-D);
+    assert (D < 0);
 
     if (compare_double (coeffs->b, 0))
     {
@@ -56,15 +53,16 @@ static enum RootsNumber solve_complex_equation (Coeffs* coeffs, const double D, 
 /**
 @brief Функция, решающая линейное уравнение. Вызывается только если
 старший коэффициент равен нулю.
-@param coeffs
+@param coeffs коэффициенты уравнения
 @param x1  решение уравнения
 @return Количество корней уравнения.
 */
-static enum RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1);
+static RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1);
 
-static enum RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1)
+static RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1)
 {
-    assert (isfinite (x1->real));
+    assert (coeffs);
+    assert (x1);
 
     if (compare_double (coeffs->b, 0))
     {
@@ -93,22 +91,24 @@ static enum RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1)
     }
 }
 
-enum RootsNumber solve_square_equation (Coeffs coeffs, Complex* x1, Complex* x2)
+enum RootsNumber solve_square_equation (Coeffs* coeffs, Complex* x1, Complex* x2)
 {
-    double a = coeffs.a;
-    double b = coeffs.b;
-    double c = coeffs.c;
+    double a = coeffs->a;
+    double b = coeffs->b;
+    double c = coeffs->c;
+
+    assert (coeffs);
+
     if (compare_double (a, 0))
     {
-        return solve_linear_equation (&coeffs, x1);
+        return solve_linear_equation (coeffs, x1);
     }
 
     else if (compare_double (b, 0))
     {
         if (a*c > 0)
         {
-            const double D = -4*a*c; //дискриминант
-            return (solve_complex_equation (&coeffs, D, x1, x2));
+            return (solve_complex_equation (coeffs, x1, x2));
         }
         else
         {
@@ -131,23 +131,23 @@ enum RootsNumber solve_square_equation (Coeffs coeffs, Complex* x1, Complex* x2)
 
     else
     {
-        const double D = coeffs.b*coeffs.b - 4*coeffs.a*coeffs.c;
+        const double D = b*b - 4*a*c;
 
         if (compare_double (D, 0))
         {
-            x1->real = -coeffs.b / (2*coeffs.a);
+            x1->real = -b / (2*a);
             return ONE_ROOT;
         }
         else if (D > 0)
         {
-            double sqrt_D = sqrt(D); //корень дискриминанты
-            x1->real = (-coeffs.b + sqrt_D) / (2*coeffs.a);
-            x2->real = (-coeffs.b - sqrt_D) / (2*coeffs.a);
+            double sqrt_D = sqrt(D); //корень дискриминанта
+            x1->real = (-b + sqrt_D) / (2*a);
+            x2->real = (-b - sqrt_D) / (2*a);
             return TWO_ROOTS;
         }
         else
         {
-            return (solve_complex_equation (&coeffs, D, x1, x2));
+            return (solve_complex_equation (coeffs, x1, x2));
         }
     }
 }

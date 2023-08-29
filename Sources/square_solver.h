@@ -41,7 +41,7 @@ struct Complex
 @param x2  решение уравнения
 @return Количество корней уравнения.
 */
-enum RootsNumber solve_square_equation (Coeffs coeffs, Complex* x1, Complex* x2);
+enum RootsNumber solve_square_equation (Coeffs* coeffs, Complex* x1, Complex* x2);
 
 
 #endif

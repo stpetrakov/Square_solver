@@ -4,7 +4,7 @@
 #include "square_solver.h"
 
 /**
-@brief Содержит один тест
+@brief Содержит один тест.
 */
 struct TestInput
 {
@@ -16,26 +16,26 @@ struct TestInput
 };
 
 /**
-@brief Сравнивает корни
+@brief Сравнивает корни.
 @param x1 первый корень
 @param x1ref второй корень
-@return true, если корни равны и false, если нет
+@return true, если корни равны и false, если нет.
 */
-bool compare_complex (const Complex x1, const Complex x1ref);
+bool compare_complex (Complex x1, Complex x1ref);
 
 /**
-@brief Проверяет, проходит ли программа тест
+@brief Проверяет, проходит ли программа тест.
 @param coeffs коэффициенты уравнения
 @param x1ref первое решение
 @param x2ref второе решение
 @param n_rootsref число решений
 @param test_number номер теста
-@return 1, если тест пройден и 0, если нет
+@return 1, если тест пройден и 0, если нет.
 */
-int test_one (const TestInput test_inputs, const int test_number);
+int test_one (TestInput* test_inputs, int test_number);
 
 /**
-@brief Подставляет тесты в Test_one и считает, сколько тестов пройдено
+@brief Подставляет тесты в Test_one и считает, сколько тестов пройдено.
 */
 void test_all ();
 
