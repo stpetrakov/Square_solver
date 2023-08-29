@@ -18,10 +18,10 @@ void swap (double *a, double *b);
 
 /**
 @brief Делает x1 больше чем x2
-@param x1
-@param x2
+@param x1 первый корень
+@param x2 второй корень
 */
-void sort_struct (Complex* x1, Complex* x2);
+void sort_roots (Complex* x1, Complex* x2);
 
 /**
 @brief Сравнивает два числа

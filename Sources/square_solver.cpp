@@ -26,22 +26,28 @@ static RootsNumber solve_complex_equation (Coeffs* coeffs, Complex* x1, Complex*
     assert (x1);
     assert (x2);
 
-    const double D = (coeffs->b * coeffs->b) - 4*coeffs->a*coeffs->c; //дискриминант
-    const double sqrt_D = sqrt(-D);
-    assert (D < 0);
+    const double D = (coeffs->b * coeffs->b) - 4 * coeffs->a * coeffs->c; //дискриминант
+
+    if (D > 0 || compare_double (D, 0))
+    {
+        printf ("ERROR: D must be negative");
+        return ZERO_ROOTS;
+    }
+
+    const double sqrt_D = sqrt (-D);
 
     if (compare_double (coeffs->b, 0))
     {
         x1->real = 0;
         x2->real = 0;
 
-        x1->imagine = +sqrt_D / (2 * fabs (coeffs->a));
+        x1->imagine = sqrt_D / (2 * fabs (coeffs->a));
         x2->imagine = -x1->imagine;
     }
     else
     {
-        x1->real    = -coeffs->b / (2*coeffs->a);
-        x1->imagine = +sqrt_D / (2 * fabs (coeffs->a));
+        x1->real    = -coeffs->b / (2 * coeffs->a);
+        x1->imagine = sqrt_D / (2 * fabs (coeffs->a));
 
         x2->real    =  x1->real;
         x2->imagine = -x1->imagine;
@@ -93,11 +99,13 @@ static RootsNumber solve_linear_equation (Coeffs* coeffs, Complex* x1)
 
 enum RootsNumber solve_square_equation (Coeffs* coeffs, Complex* x1, Complex* x2)
 {
+    assert (coeffs);
+    assert (x1);
+    assert (x2);
+
     double a = coeffs->a;
     double b = coeffs->b;
     double c = coeffs->c;
-
-    assert (coeffs);
 
     if (compare_double (a, 0))
     {
@@ -106,13 +114,13 @@ enum RootsNumber solve_square_equation (Coeffs* coeffs, Complex* x1, Complex* x2
 
     else if (compare_double (b, 0))
     {
-        if (a*c > 0)
+        if (a * c > 0)
         {
             return (solve_complex_equation (coeffs, x1, x2));
         }
         else
         {
-            x1->real = sqrt (fabs (-c/a));
+            x1->real = sqrt (fabs (-c / a));
             if (!compare_double (x1->real, 0))
             {
                 x2->real = -(x1->real);
@@ -125,24 +133,26 @@ enum RootsNumber solve_square_equation (Coeffs* coeffs, Complex* x1, Complex* x2
     else if (compare_double (c, 0))
     {
         x2->real = 0;
-        x1->real = -b/a;
+        x1->real = -b / a;
         return TWO_ROOTS;
     }
 
     else
     {
-        const double D = b*b - 4*a*c;
+        const double D = b * b - 4 * a * c;
 
         if (compare_double (D, 0))
         {
             x1->real = -b / (2*a);
+
             return ONE_ROOT;
         }
         else if (D > 0)
         {
             double sqrt_D = sqrt(D); //корень дискриминанта
-            x1->real = (-b + sqrt_D) / (2*a);
-            x2->real = (-b - sqrt_D) / (2*a);
+            x1->real = (-b + sqrt_D) / (2 * a);
+            x2->real = (-b - sqrt_D) / (2 * a);
+
             return TWO_ROOTS;
         }
         else

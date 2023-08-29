@@ -24,6 +24,7 @@ int test_one (TestInput* test_inputs, int test_number)
     int n_roots = solve_square_equation (&(test_inputs->coeffs), &x1, &x2);
 
     printf("%d) ", test_number);
+
     if (compare_complex (x1, test_inputs->x1ref) &&
         compare_complex (x2, test_inputs->x2ref) &&
         test_inputs->n_rootsref == n_roots)
@@ -43,7 +44,7 @@ int test_one (TestInput* test_inputs, int test_number)
     }
 }
 
-void test_all()
+void test_all(char* file_name)
 {
 /*
     //                            a  b  c  x1.re     x1.im       x2.re     x2.im     nRref
@@ -60,18 +61,19 @@ void test_all()
                                 { 0, 0, 0,   0,        0,         0,         0,       -1},
     };
 */
-    FILE *tests = fopen ("tests.txt", "r");
-    assert (tests != NULL);
+    FILE *tests_data = fopen (file_name, "r");
+    assert (tests_data != NULL);
 
     int count_of_tests = 0;//количество тестов
     int test_ok = 0;
-    fscanf (tests, "%d", &count_of_tests);
+
+    fscanf (tests_data, "%d", &count_of_tests);
     TestInput test_inputs = {};
 
     for (int i = 0; i < count_of_tests; ++i)
     {
 
-        fscanf (tests, "%lg %lg %lg %lg %lg %lg %lg %d",
+        fscanf (tests_data, "%lg %lg %lg %lg %lg %lg %lg %d",
             &test_inputs.coeffs.a, &test_inputs.coeffs.b, &test_inputs.coeffs.c,
             &test_inputs.x1ref.real, &test_inputs.x1ref.imagine,
             &test_inputs.x2ref.real, &test_inputs.x2ref.imagine, &test_inputs.n_rootsref);

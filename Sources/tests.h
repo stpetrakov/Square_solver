@@ -37,7 +37,7 @@ int test_one (TestInput* test_inputs, int test_number);
 /**
 @brief Подставляет тесты в Test_one и считает, сколько тестов пройдено.
 */
-void test_all ();
+void test_all (char* file_name);
 
 
 #endif

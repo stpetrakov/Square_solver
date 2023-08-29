@@ -8,13 +8,13 @@ void swap(double *a, double *b)
 {
     assert (a);
     assert (b);
+
     const double save = *b; //временно хранит значение b
     *b = *a;
     *a = save;
-
 }
 
-void sort_struct (Complex* x1, Complex* x2)
+void sort_roots (Complex* x1, Complex* x2)
 {
     assert (x1);
     assert (x2);
@@ -29,5 +29,6 @@ void sort_struct (Complex* x1, Complex* x2)
 bool compare_double (double first, double second)
 {
     const double EPSILON = 1e-5;  //допустимая погрешность
+
     return (fabs (first - second) < EPSILON);
 }

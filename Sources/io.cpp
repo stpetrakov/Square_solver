@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
 
 #include "utilities.h"
 #include "square_solver.h"
@@ -14,8 +15,10 @@ void clear_buffer()
 
 void input_coeffs (Coeffs* coeffs)
 {
+    assert (coeffs);
 
     printf ("Enter a, b, c:\n");
+
     while (scanf ("%lg %lg %lg", &coeffs->a, &coeffs->b, &coeffs->c) != 3)
     {
         printf ("ERROR: expected 3 numbers");
@@ -27,6 +30,10 @@ void input_coeffs (Coeffs* coeffs)
 
 void output_complex_roots (Complex* x1, Complex* x2)
 {
+    assert (x1);
+    assert (x2);
+    assert (x1 != x2);
+
          if (compare_double (x1->imagine, 1) && compare_double (fabs (x1->real), 0))
         printf ("x1 = i, "     "x2 = -i"      "\n");
 
@@ -45,6 +52,9 @@ void output_complex_roots (Complex* x1, Complex* x2)
 
 void output_roots (RootsNumber nRoots, Complex* x1, Complex* x2)
 {
+    assert (x1);
+    assert (x2);
+
     switch (nRoots)
     {
         case ZERO_ROOTS:
